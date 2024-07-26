@@ -24,7 +24,7 @@ require_relative "ahoy_email/redis_subscriber"
 require_relative "ahoy_email/engine" if defined?(Rails)
 
 module AhoyEmail
-  mattr_accessor :secret_token, :default_options, :subscribers, :invalid_redirect_url, :track_method, :api, :preserve_callbacks, :save_token, :html5
+  mattr_accessor :secret_token, :default_options, :subscribers, :invalid_redirect_url, :track_method, :api, :preserve_callbacks, :save_token, :html5, :on_message_create
   mattr_writer :message_model
 
   self.api = false
@@ -73,6 +73,8 @@ module AhoyEmail
 
     ahoy_message.sent_at = Time.now
     ahoy_message.save!
+
+    self.on_message_create.call(ahoy_message) if self.on_message_create
 
     ahoy_message
   end
