@@ -260,7 +260,7 @@ end
 
 AhoyEmail.subscribers << EmailSubscriber
 AhoyEmail.api = true
-````
+```
 
 ### Usage
 
@@ -332,6 +332,16 @@ To use HTML5 parsing instead, set this in an initializer:
 
 ```ruby
 AhoyEmail.html5 = true
+```
+
+## Callback on message create
+
+You can specify a hook for when a message record is created.
+
+```ruby
+AhoyEmail.on_message_create = lambda do |message|
+  # Do something with the message
+end
 ```
 
 ## History
